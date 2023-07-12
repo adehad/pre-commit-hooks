@@ -1,0 +1,7 @@
+- id: check-header-footer
+  name: Check Headers & Footers
+  description: Check the header and footer of files.
+  entry: check-header-footer
+  language: python
+  types: [text]
+  stages: [commit, push, manual]

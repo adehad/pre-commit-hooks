@@ -28,6 +28,9 @@ Documentation = "https://github.com/adehad/pre-commit-hooks/#readme"
 Issues = "https://github.com/adehad/pre-commit-hooks/issues"
 Source = "https://github.com/adehad/pre-commit-hooks/"
 
+[project.scripts]
+check-header-footer = "pre_commit_hooks.check_header_footer:main"
+
 [tool.hatch.build]
 sources = ["src"]
 
@@ -54,7 +57,7 @@ dependencies = [
   "pytest-cov",
 ]
 [tool.hatch.envs.default.scripts]
-cov = "pytest --cov-report=term-missing --cov-config=pyproject.toml --cov=src/pre_commit_hooks --cov=tests {args}"
+cov = "pytest -vv --cov-report=term-missing --cov-config=pyproject.toml --cov=src/pre_commit_hooks --cov=tests {args}"
 no-cov = "cov --no-cov {args}"
 docs = "sphinx-build -a -n -v -W --keep-going -b html --color -d build/docs/doctree docs/ build/docs/out"
 lint = "python -m pre_commit run --color=always {args:--all-files}"
