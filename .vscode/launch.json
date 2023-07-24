@@ -1,0 +1,29 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "pyModule",
+            "type": "python",
+            "request": "launch",
+            "module": "pre_commit_hooks.check_header_footer",
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+        {
+            "name": "pytest",
+            "type": "python",
+            "request": "launch",
+            "module": "pytest",
+            "console": "integratedTerminal",
+            "args": [
+                "--no-cov", // disable as it affects breakpoints
+                "-vv", "-k",
+                "" // add test function name here
+            ],
+            "justMyCode": true
+        }
+    ]
+}
