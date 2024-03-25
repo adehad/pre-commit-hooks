@@ -1,4 +1,5 @@
 """Simple test for version."""
+
 from __future__ import annotations
 
 import pre_commit_hooks
