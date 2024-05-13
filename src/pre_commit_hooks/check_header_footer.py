@@ -1,4 +1,5 @@
 """Check for lines found in the first or last lines of a file."""
+
 from __future__ import annotations
 
 import functools

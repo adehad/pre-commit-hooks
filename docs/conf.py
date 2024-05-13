@@ -1,4 +1,5 @@
 """Sphinx docs config."""
+
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here.
 from __future__ import annotations

@@ -1,4 +1,5 @@
 """Pytest configuration and other utilities."""
+
 from __future__ import annotations
 
 import pathlib
