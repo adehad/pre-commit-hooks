@@ -1,4 +1,5 @@
 """Test check_header_footer."""
+
 from __future__ import annotations
 
 import json
