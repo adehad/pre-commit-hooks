@@ -6,6 +6,7 @@ import abc
 import argparse
 import enum
 import io
+import json
 import os
 import pathlib
 from typing import Any, Sequence
@@ -96,3 +97,32 @@ def sanitize_rb_line(line: bytes) -> str:
         str: The sanitized line.
     """
     return line.decode().rstrip()
+
+
+def load_json_source(file_or_json_str: str) -> dict[str, Any]:
+    """Load a potential JSON source.
+
+    Args:
+        file_or_json_str (str): path to JSON file, or stringified JSON.
+
+    Returns:
+        dict[str, Any]: Loaded JSON.
+    """
+    file_source = pathlib.Path(file_or_json_str)
+    if file_source.is_file():
+        with file_source.open(encoding="utf-8") as fp:
+            return json.load(fp)
+
+    try:
+        return json.loads(file_or_json_str)
+    except Exception:
+        print("Unsupported JSON source, no custom rules applied!")
+        return {}
+
+
+class HashableDict(dict):
+    """Hashable dict but not immutable."""
+
+    def __hash__(self) -> int:
+        """Hash."""
+        return hash((frozenset(self), frozenset(self.values())))

@@ -95,6 +95,35 @@ repos:
 Future work:
 1. Support a year parameter that can be used to apply fixes.
 
+
+### arabic-presentation-form
+
+Replace characters in Arabic Presentation form (A or B), and convert them into 'default' unicode characters.
+One application is when using the 'Scheherazade New' font, and it does not support these characters.
+
+Arguments:
+- `--excluded-chars`: Regex of characters to exclude from being fixed.
+- `--custom-rules`: Rules to update or override the tools inbuilt configuration. Format and example below:
+  ```json
+  "RuleName": {"rule": {"ReplacementCharacter(s)": "RegexOfApplicableCharacter(s)"}}
+  "ʾalif": {"rule": {"\u0627": "(\ufe8d|\ufe8e)"}},
+  ```
+
+Example where we are extending the applicable file types and using a specific folder (all subfolders under `site/data`)
+
+```yaml
+repos:
+  - repo: https://github.com/adehad/pre-commit-hooks
+    rev: main
+    hooks:
+      - id: arabic-presentation-form
+        entry: arabic-presentation-form
+        language: python
+        types_or: [text, json, markdown]
+        args: [--excluded-chars, (ﷺ)]
+        files: ^site/data/
+```
+
 ## Local Installation
 
 ```console
