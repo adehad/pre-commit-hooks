@@ -30,6 +30,7 @@ Source = "https://github.com/adehad/pre-commit-hooks/"
 
 [project.scripts]
 check-header-footer = "pre_commit_hooks.check_header_footer:main"
+arabic-presentation-form = "pre_commit_hooks.arabic_presentation_form:main"
 
 [tool.hatch.build]
 sources = ["src"]
@@ -72,7 +73,8 @@ python = ["38", "39", "310", "311"]
 # External Tool Config
 ########################################################################################
 [tool.mypy]
-python_version = 3.8
+python_version = '3.8'
+strict = true
 ignore_missing_imports = true
 namespace_packages = true
 show_error_codes = true

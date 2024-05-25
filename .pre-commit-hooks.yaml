@@ -5,3 +5,10 @@
   language: python
   types: [text]
   stages: [commit, push, manual]
+- id: arabic-presentation-form
+  name: Arabic Presentation Form Normalizer
+  description: Replaces Arabic Presentation for and other contextual forms to default.
+  entry: arabic-presentation-form
+  language: python
+  types: [text]
+  stages: [commit, push, manual]
