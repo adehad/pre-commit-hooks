@@ -45,3 +45,4 @@ repos:
           - .
         args:
           [--no-strict-optional, --ignore-missing-imports, --show-error-codes]
+        exclude: tests/

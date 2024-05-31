@@ -7,7 +7,8 @@ from __future__ import annotations
 
 import enum
 
-CHAR_MAP_TYPE = dict[str, dict[str, dict[str, str]]]
+REMAP_RULE_TYPE = dict[str, dict[str, str]]
+CHAR_MAP_TYPE = dict[str, REMAP_RULE_TYPE]
 
 # spell-checker: disable
 # ruff: noqa: E501, RUF001, RUF003
@@ -84,32 +85,33 @@ class ArabicUnicodeGroup(enum.Enum):
     """143 characters"""
 
     @classmethod
-    def get_type(cls: ArabicUnicodeGroup, input_char: str) -> ArabicUnicodeGroup:
+    def get_type(cls: type[ArabicUnicodeGroup], input_char: str) -> ArabicUnicodeGroup:
         """Return the Arabic Unicode Group."""
+        unicode_group = cls.Unknown
         if "\u0600" <= input_char <= "\u06ff":
-            return cls.Arabic
+            unicode_group = cls.Arabic
         elif "\u0750" <= input_char <= "\u077f":
-            return cls.ArabicSupplement
+            unicode_group = cls.ArabicSupplement
         elif "\u0870" <= input_char <= "\u089f":
-            return cls.ArabicExtendedB
+            unicode_group = cls.ArabicExtendedB
         elif "\u08a0" <= input_char <= "\u08ff":
-            return cls.ArabicExtendedA
+            unicode_group = cls.ArabicExtendedA
         elif "\ufb50" <= input_char <= "\ufdff":
-            return cls.ArabicPresentationFormsA
+            unicode_group = cls.ArabicPresentationFormsA
         elif "\ufe70" <= input_char <= "\ufeff":
-            return cls.ArabicPresentationFormsB
+            unicode_group = cls.ArabicPresentationFormsB
         elif "\u10e60" <= input_char <= "\u10e7F":
-            return cls.RumiNumeralSymbols
+            unicode_group = cls.RumiNumeralSymbols
         elif "\u10ec0" <= input_char <= "\u10efF":
-            return cls.ArabicExtendedC
+            unicode_group = cls.ArabicExtendedC
         elif "\u1ec70" <= input_char <= "\u1ecbF":
-            return cls.IndicSiyaqNumbers
+            unicode_group = cls.IndicSiyaqNumbers
         elif "\u1ed00" <= input_char <= "\u1ed4F":
-            return cls.OttomanSiyaqNumbers
+            unicode_group = cls.OttomanSiyaqNumbers
         elif "\u1ee00" <= input_char <= "\u1eefF":
-            return cls.ArabicMathematicalAlphabeticSymbols
-        else:
-            return cls.Unknown
+            unicode_group = cls.ArabicMathematicalAlphabeticSymbols
+
+        return unicode_group
 
 
 def is_contains_non_general_form(char: str) -> bool:

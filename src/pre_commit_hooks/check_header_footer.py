@@ -7,7 +7,8 @@ import io
 import json
 import pathlib
 import re
-from typing import Any, Dict, NamedTuple, Sequence
+from collections.abc import Sequence
+from typing import Any, NamedTuple
 
 from .util import (
     ABCArgs,
@@ -17,7 +18,7 @@ from .util import (
     sanitize_rb_line,
 )
 
-RulesDict = Dict[str, re.Pattern[Any]]
+RulesDict = dict[str, re.Pattern[Any]]
 
 
 def check_rules_in_file(

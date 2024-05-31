@@ -6,7 +6,8 @@ import functools
 import pathlib
 import re
 import sys
-from typing import Any, Dict, Sequence
+from collections.abc import Sequence
+from typing import Any
 
 from ..util import (
     ABCArgs,
@@ -17,16 +18,18 @@ from ..util import (
 )
 from . import char_map
 
-sys.stdout.reconfigure(encoding="utf-8")  # For Windows: we want to be sure to use UTF-8
-RulesDict = Dict[re.Pattern[Any], str]
+sys.stdout.reconfigure(  # type: ignore[attr-defined]
+    encoding="utf-8"  # For Windows: we want to be sure to use UTF-8
+)
+RulesDict = dict[re.Pattern[Any], str]
 
 
 def apply_rules_to_lines(
     line: str,
     rules: RulesDict,
-    exclude: re.Pattern,
-    file_name: str,
-    line_no: str,
+    exclude: re.Pattern[str],
+    file_name: pathlib.Path | str,
+    line_no: str | int,
 ) -> tuple[ExitCode, str]:
     """Check the text for rules.
 
@@ -73,7 +76,7 @@ def apply_rules_to_lines(
     return exit_code, new_line
 
 
-def get_rules(custom_rules: dict[str, dict[str, str]]) -> RulesDict:
+def get_rules(custom_rules: char_map.CHAR_MAP_TYPE) -> RulesDict:
     """Return the rules from a given config string.
 
     Args:

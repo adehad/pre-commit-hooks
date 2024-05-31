@@ -9,7 +9,9 @@ import io
 import json
 import os
 import pathlib
-from typing import Any, Sequence
+import typing
+from collections.abc import Sequence
+from typing import Any
 
 
 class ExitCode(enum.IntEnum):
@@ -108,21 +110,22 @@ def load_json_source(file_or_json_str: str) -> dict[str, Any]:
     Returns:
         dict[str, Any]: Loaded JSON.
     """
+    default: dict[str, Any] = {}
     file_source = pathlib.Path(file_or_json_str)
     if file_source.is_file():
         with file_source.open(encoding="utf-8") as fp:
-            return json.load(fp)
+            return typing.cast(dict[str, Any], json.load(fp))
 
     try:
-        return json.loads(file_or_json_str)
+        return json.loads(file_or_json_str)  # type: ignore[no-any-return]
     except Exception:
         print("Unsupported JSON source, no custom rules applied!")
-        return {}
+        return default
 
 
-class HashableDict(dict):
+class HashableDict(dict):  # type: ignore[type-arg]
     """Hashable dict but not immutable."""
 
-    def __hash__(self) -> int:
+    def __hash__(self) -> int:  # type: ignore[override]
         """Hash."""
         return hash((frozenset(self), frozenset(self.values())))
