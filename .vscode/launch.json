@@ -6,7 +6,7 @@
     "configurations": [
         {
             "name": "pyModule",
-            "type": "python",
+            "type": "debugpy",
             "request": "launch",
             "module": "pre_commit_hooks.check_header_footer",
             "console": "integratedTerminal",
@@ -14,13 +14,14 @@
         },
         {
             "name": "pytest",
-            "type": "python",
+            "type": "debugpy",
             "request": "launch",
             "module": "pytest",
             "console": "integratedTerminal",
             "args": [
                 "--no-cov", // disable as it affects breakpoints
-                "-vv", "-k",
+                "-vv",
+                "-k",
                 "" // add test function name here
             ],
             "justMyCode": true
