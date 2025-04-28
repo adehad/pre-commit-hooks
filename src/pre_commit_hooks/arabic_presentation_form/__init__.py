@@ -18,7 +18,7 @@ from ..util import (
 )
 from . import char_map
 
-sys.stdout.reconfigure(  # type: ignore[attr-defined]
+sys.stdout.reconfigure(  # type: ignore[union-attr]
     encoding="utf-8"  # For Windows: we want to be sure to use UTF-8
 )
 RulesDict = dict[re.Pattern[Any], str]
