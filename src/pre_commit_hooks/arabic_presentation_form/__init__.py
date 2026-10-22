@@ -156,26 +156,29 @@ class ArabicPresentationFormChecker(ABCHook):
         exclude_regex = re.compile(args.excluded_chars)
 
         new_file_lines = []
-        with file_name.open("r", encoding="utf-8") as f:
-            for line_no, line in enumerate(iter(f.readlines()), start=1):
-                intermediate_exit_code, new_line = apply_rules_to_lines(
-                    line=line,
-                    line_no=line_no,
-                    file_name=file_name,
-                    rules=get_rules(args.custom_rules),
-                    exclude=exclude_regex,
-                )
-                exit_code |= intermediate_exit_code
+        # newline="" keeps each line's own ending, so Windows doesn't rewrite LF as CRLF
+        with file_name.open("r", encoding="utf-8", newline="") as f:
+            original_lines = f.readlines()
+        for line_no, line in enumerate(original_lines, start=1):
+            intermediate_exit_code, new_line = apply_rules_to_lines(
+                line=line,
+                line_no=line_no,
+                file_name=file_name,
+                rules=get_rules(args.custom_rules),
+                exclude=exclude_regex,
+            )
+            exit_code |= intermediate_exit_code
 
-                if char_map.is_contains_non_general_form(
-                    max(exclude_regex.sub("", new_line) or " ")
-                ):
-                    print(f"Incomplete Fixes Applied: {file_name}:{line_no}")
+            if char_map.is_contains_non_general_form(
+                max(exclude_regex.sub("", new_line) or " ")
+            ):
+                print(f"Incomplete Fixes Applied: {file_name}:{line_no}")
 
-                new_file_lines.append(new_line)
+            new_file_lines.append(new_line)
 
-        with file_name.open("w", encoding="utf-8") as f:
-            f.writelines(new_file_lines)
+        if new_file_lines != original_lines:
+            with file_name.open("w", encoding="utf-8", newline="") as f:
+                f.writelines(new_file_lines)
         return ExitCode(exit_code)
 
 
